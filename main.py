@@ -1,21 +1,14 @@
 from google_images_download import google_images_download
 import configparser
+from itertools import chain
+import csv
 
 
-def get_image_classes(config):
-    """
-    Fetches the classes in the config object and returns a list of strings
-    :param config: 
-    :return: 
-    """
-    return config['classes']['key_words'].split(",")
-
-
-def main():
-    config = configparser.ConfigParser()
-    config.read('image_scrapper.conf')
-    classes = get_image_classes(config)
-    scrape_images(classes, config)
+def read_csv_to_list_of_strings(path):
+    with open(path, 'r') as f:
+        reader = csv.reader(f)
+        words = list(filter(None, list(chain.from_iterable(reader))))  # Flattens 2d list and removes blank strings
+    return words
 
 
 def scrape_images(classes, config):
@@ -42,6 +35,13 @@ def scrape_images(classes, config):
         response = google_images_download.googleimagesdownload()
         print(element, output_directory, chrome_driver, limit)
         response.download(arguments)
+
+
+def main():
+    config = configparser.ConfigParser()
+    config.read('image_scrapper.conf')
+    classes = read_csv_to_list_of_strings(config['classes']['csv_path'])
+    scrape_images(classes, config)
 
 
 if __name__ == "__main__":

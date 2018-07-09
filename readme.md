@@ -4,11 +4,12 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 #Requirements
 Download chrome web driver and set path to [chrome web driver](http://chromedriver.chromium.org/downloads) executable in image_scrapper.conf file.
-This code is made to work for windows. Some adaptations will be required to run on linux or mac
+This code is made to work for windows. Some adaptations might be required to run on linux or mac
 
 #How to use the scrapper
 Create and activate your virtual env
 Modify the image_scrapper.conf file following the instructions in the comments
+Add image classes to search in the search_items.csv
 
 #Note to developers
 Do not commit paths in the config file
